@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import { createContext, useEffect, useState } from "react";
 import {
   GoogleAuthProvider,
@@ -47,9 +46,6 @@ const AuthProvider = ({ children }) => {
 
   const logOut = async () => {
     setLoading(true);
-    await axios.get(`${import.meta.env.BASE_URL}/logout`, {
-      withCredentials: true,
-    });
     return signOut(auth);
   };
 
@@ -62,7 +58,7 @@ const AuthProvider = ({ children }) => {
   // Get token from server
   const getToken = async (email) => {
     const { data } = await axios.post(
-      `${import.meta.env.BASE_URL}/jwt`,
+      `${import.meta.env.VITE_BASE_URL}/jwt`,
       { email },
       { withCredentials: true }
     );
@@ -76,7 +72,7 @@ const AuthProvider = ({ children }) => {
       role: "user",
     };
     const { data } = await axios.put(
-      `${import.meta.env.BASE_URL}/users`,
+      `${import.meta.env.VITE_BASE_URL}/users`,
       currentUser
     );
     return data;
@@ -85,6 +81,7 @@ const AuthProvider = ({ children }) => {
   // onAuthStateChange
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+        console.log(currentUser)
       const userEmail = currentUser?.email || user?.email;
       const loggedUser = { email: userEmail };
       setUser(currentUser);
@@ -95,7 +92,7 @@ const AuthProvider = ({ children }) => {
         setLoading(false);
       } else {
         axios
-          .get(`${import.meta.env.BASE_URL}/logout`,{ withCredentials: true })
+          .get(`${import.meta.env.VITE_BASE_URL}/logout`,{ withCredentials: true })
           .then((res) => {
             console.log(res.data);
             setLoading(false);
@@ -125,9 +122,5 @@ const AuthProvider = ({ children }) => {
   );
 };
 
-AuthProvider.propTypes = {
-  // Array of children.
-  children: PropTypes.array,
-};
 
 export default AuthProvider;

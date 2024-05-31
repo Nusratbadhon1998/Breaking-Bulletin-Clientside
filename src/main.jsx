@@ -9,8 +9,10 @@ import 'react-toastify/dist/ReactToastify.css';
 
 ReactDOM.createRoot(document.getElementById("root")).render(
 
-  <AuthProvider>
-    <RouterProvider router={router} />
+ <div className="noto-serif">
+   <AuthProvider>
+    <RouterProvider  router={router} />
     <ToastContainer/>
   </AuthProvider>
+ </div>
 );
