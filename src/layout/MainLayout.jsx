@@ -1,8 +1,15 @@
 import React from 'react'
+import Nav from '../pages/shared/Nav/Nav'
+import { Outlet } from 'react-router-dom'
 
 function MainLayout() {
   return (
-    <div>MainLayout</div>
+    <div>
+        <Nav/>
+        <Outlet/>
+    
+        
+    </div>
   )
 }
 
