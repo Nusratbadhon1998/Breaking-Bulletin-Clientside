@@ -11,6 +11,7 @@ import AdminRoute from "./AdminRoute";
 import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
 import AllArticles from "../pages/Dashboard/AllArticles/AllArticles";
 import AddPublisher from "../pages/Dashboard/AddPublisher/AddPublisher";
+import AddArticle from "../pages/AddArticle/AddArticle";
 
 export const router = createBrowserRouter([
   {
@@ -25,6 +26,14 @@ export const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />,
+      },
+      {
+        path: "add-article",
+        element: (
+          <PrivateRoute>
+            <AddArticle />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/register",
@@ -67,21 +76,25 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path:"all-articles",
-        element:<PrivateRoute>
-        <AdminRoute>
-          <AllArticles />
-        </AdminRoute>
-      </PrivateRoute>
+        path: "all-articles",
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <AllArticles />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
       },
       {
-        path:"add-publisher",
-        element:<PrivateRoute>
-        <AdminRoute>
-          <AddPublisher />
-        </AdminRoute>
-      </PrivateRoute>
-      }
+        path: "add-publisher",
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <AddPublisher />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
+      },
     ],
   },
 ]);

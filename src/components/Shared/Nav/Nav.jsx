@@ -26,7 +26,7 @@ function Nav() {
         className={({ isActive }) =>
           isActive ? "text-yellow-500" : "text-stone-700"
         }
-        to="/add-articles"
+        to="/add-article"
       >
         Add Articles
       </NavLink>
