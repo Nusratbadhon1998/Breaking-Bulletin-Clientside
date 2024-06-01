@@ -4,11 +4,17 @@ import { HiOutlineEyeOff } from "react-icons/hi";
 import { HiOutlineEye } from "react-icons/hi";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../providers/AuthProvider";
+import axios from "axios";
+import { ImSpinner8 } from "react-icons/im";
 
 function Register() {
   const [showPass, setShowPass] = useState(false);
-  const { user, setUser, createUser, updateUserProfile, logOut } =
+  const { user, setUser, createUser, updateUserProfile } =
     useContext(AuthContext);
+
+  console.log(user);
+
+  const [loading, setLoading] = useState(false);
   // Error show
   const [error, setError] = useState(null);
   // success
@@ -26,12 +32,17 @@ function Register() {
     // Clearing the error and success message
     setError("");
     setSuccess("");
+    setLoading(true);
 
     const form = e.target;
     const userName = form.name.value;
     const email = form.email.value;
-    const photo = form.photo.value;
     const password = form.password.value;
+
+    const image = form.image.files[0];
+    const formData = new FormData();
+    formData.append("image", image);
+
     try {
       if (!uppercaseRegex.test(password)) {
         toast.error("Password should contain at-least one uppercase", {
@@ -42,44 +53,57 @@ function Register() {
         return;
       } else if (!specialCharRegex.test(password)) {
         toast.error("Password should contain one special character", {
-            position: "top-right",
-            autoClose: 2000,
-          }),
-        setError("Password should contain at-least one lowercase");
+          position: "top-right",
+          autoClose: 2000,
+        }),
+          setError("Password should contain at-least one lowercase");
         return;
       } else if (!minSixCharsRegex.test(password)) {
         toast.error("Password should at-least 6 char", {
-            position: "top-right",
-            autoClose: 2000,
-          }),
-        setError("Password should at-least 6 char");
+          position: "top-right",
+          autoClose: 2000,
+        }),
+          setError("Password should at-least 6 char");
         return;
       }
 
-      await createUser(email, password);
-      toast.success(" Successfully Registered!", {
-        position: "top-right",
-        autoClose: 2000,
-      }),
+      // 1. Upload image and get image url
+      const { data } = await axios.post(
+        `https://api.imgbb.com/1/upload?key=${
+          import.meta.env.VITE_IMGBB_API_KEY
+        }`,
+        formData
+      );
+      console.log(data.data.display_url);
 
-      // Update profile
-      await updateUserProfile(userName, photo);
+      //2. User Registration
+      const result = await createUser(email, password);
 
-      // Update local state immediately
-      setUser({ email: email, displayName: userName, photoURL: photo });
-   
+      // 3. Save username and photo in firebase
+      await updateUserProfile(userName, data.data.display_url);
 
-      // Navigate after updating profile
+      setUser({
+        email: email,
+        displayName: userName,
+        photoURL: data.data.display_url,
+      });
+      setLoading(false);
+
       navigate("/");
+      toast.success("Signup Successful");
     } catch (error) {
       console.log(error.message);
+      setLoading(false);
     }
   };
   return (
     <div className="flex flex-col md:flex-row lg:flex-row my-20">
-      
       <div className="w-full  md:w-[75%] lg:w-[40%] min-h-screen relative">
-        <img className="w-full h-full" src="https://images.unsplash.com/photo-1699523525646-ae96e089474f?q=80&w=1895&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
+        <img
+          className="w-full h-full"
+          src="https://images.unsplash.com/photo-1699523525646-ae96e089474f?q=80&w=1895&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          alt=""
+        />
       </div>
 
       <div
@@ -119,12 +143,7 @@ function Register() {
             <label htmlFor="password" className="block text-gray-600 font-bold">
               Photo URL
             </label>
-            <input
-              type="text"
-              name="photo"
-              placeholder="Photo URL"
-              className="w-full border border-black px-4 py-3 rounded-md border-gray-300 bg-gray-50 text-stone-800 focus:border-violet-600"
-            />
+            <input type="file" name="image" id="" />
           </div>
           <div className="space-y-1 text-sm relative">
             <label htmlFor="password" className="block text-gray-600 font-bold">
@@ -151,6 +170,7 @@ function Register() {
           </div>
 
           <input
+            disabled={loading}
             className="block w-full p-3 text-center rounded-lg bg-black text-white font-semibold"
             type="submit"
             value="Sign Up"
@@ -160,7 +180,7 @@ function Register() {
         <p className="text-base text-center sm:px-6 text-gray-600">
           Already have an account?
           <Link to="/login" className="underline font-bold">
-             Log In
+            Log In
           </Link>
         </p>
       </div>
