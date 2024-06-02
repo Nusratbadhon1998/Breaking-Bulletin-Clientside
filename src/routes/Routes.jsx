@@ -12,6 +12,7 @@ import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
 import AllArticles from "../pages/Dashboard/AllArticles/AllArticles";
 import AddPublisher from "../pages/Dashboard/AddPublisher/AddPublisher";
 import AddArticle from "../pages/AddArticle/AddArticle";
+import PublicArticles from "../pages/PublicArticles/PublicArticles";
 
 export const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ export const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path:"/all-articles",
+        element:<PublicArticles/>
       },
       {
         path: "/login",
