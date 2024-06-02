@@ -1,10 +1,9 @@
 import React from "react";
 import useAuth from "../../hooks/useAuth";
+import { Link } from "react-router-dom";
 
-function PublicArticleCard({ article,user }) {
-
-    
-  const { title, imageURL, publisher, description, premium } = article;
+function PublicArticleCard({ article, user }) {
+  const { title, imageURL, publisher, description, premium, _id } = article;
 
   return (
     <div>
@@ -23,7 +22,13 @@ function PublicArticleCard({ article,user }) {
               <p>{description.slice(0, 60)}...</p>
               <p>{publisher}</p>
               <div className="card-actions justify-end">
-                <button disabled={!user?.premiumTaken} className="btn btn-primary">Details</button>
+                <Link
+                  to={`/article/${_id}`}
+                  disabled={!user?.premiumTaken}
+                  className="btn btn-primary"
+                >
+                  Details
+                </Link>
               </div>
             </div>
           </div>
@@ -43,7 +48,13 @@ function PublicArticleCard({ article,user }) {
               <p>{description.slice(0, 60)}...</p>
               <p>{publisher}</p>
               <div className="card-actions justify-end">
-                <button className="btn btn-primary">Details</button>
+                <Link
+                  to={`/article/${_id}`}
+                  onClick={() => handleViewCount(_id)}
+                  className="btn btn-primary"
+                >
+                  Details
+                </Link>
               </div>
             </div>
           </div>

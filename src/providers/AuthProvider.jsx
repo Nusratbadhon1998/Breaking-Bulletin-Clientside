@@ -62,6 +62,8 @@ const AuthProvider = ({ children }) => {
       { email },
       { withCredentials: true }
     );
+    setLoading(false);
+
     return data;
   };
 
@@ -89,12 +91,10 @@ const AuthProvider = ({ children }) => {
       if (currentUser) {
         getToken(loggedUser.email);
         saveUser(currentUser);
-        setLoading(false);
       } else {
         axios
           .get(`${import.meta.env.VITE_BASE_URL}/logout`,{ withCredentials: true })
           .then((res) => {
-            console.log(res.data);
             setLoading(false);
           });
       }

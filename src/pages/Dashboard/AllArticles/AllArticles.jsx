@@ -4,9 +4,8 @@ import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import AllArticleTable from "../../../components/Dashboard/Table/AllArticleTable";
 import { toast } from "react-toastify";
-import ArticleTableRow from "../../../components/Dashboard/Table/ArticleTableRow";
 import { useState } from "react";
-import DeclineDialogue from "../../../components/Dashboard/Dialogue/DeclineDialogue";
+import DeclineModal from "../../../components/Modal/DeclineModal";
 
 function AllArticles() {
   const { user, loading } = useAuth();
@@ -22,7 +21,7 @@ function AllArticles() {
     queryKey: ["articles"],
     enabled: !loading && !!user,
     queryFn: async () => {
-      const { data } = await axiosSecure.get("/articles");
+      const { data } = await axiosSecure.get("/all-articles");
       return data;
     },
   });
@@ -35,9 +34,9 @@ function AllArticles() {
       });
       console.log(data);
     },
-    onSuccess:()=>{
-        console.log("success")
-    }
+    onSuccess: () => {
+      console.log("success");
+    },
   });
   // Change status and premium
   const handleUpdate = async ({ id, status, isPremium }) => {
@@ -126,11 +125,11 @@ function AllArticles() {
           </tbody>
         </table>
       </div>
-      <DeclineDialogue
+      <DeclineModal
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         handleDeclineReason={handleDeclineReason}
-      />
+      ></DeclineModal>
     </section>
   );
 }

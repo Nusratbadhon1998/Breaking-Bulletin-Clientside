@@ -7,7 +7,7 @@ import Container from "../../components/Shared/Container";
 import useAuth from "../../hooks/useAuth";
 
 function PublicArticles() {
-  const { user:loggedUser,loading } = useAuth();
+  const { user: loggedUser = {}, loading } = useAuth();
 
   const axiosSecure = useAxiosSecure();
   const [publisherFilter, setPublisherFilter] = useState("");
@@ -37,7 +37,7 @@ function PublicArticles() {
       return data;
     },
   });
-//   Get all publisher
+  //   Get all publisher
   const { data: publishers = [], isLoading: publisherLoading } = useQuery({
     queryKey: ["publishers"],
     queryFn: async () => {
@@ -46,17 +46,15 @@ function PublicArticles() {
     },
   });
 
-//   Get a user
-
-const {data:user={},isLoading:userLoading}= useQuery({
-    queryKey:["user",loggedUser?.email],
-    enabled: !!loggedUser.email && !loading,
-    queryFn: async ()=>{
-        const {data}= await axiosSecure(`/user/${loggedUser?.email}`)
-        return data
-
-    }
-})
+  //   Get a user
+  const { data: user = {}, isLoading: userLoading } = useQuery({
+    queryKey: ["user", loggedUser?.email],
+    enabled: !loading && !!loggedUser?.email,
+    queryFn: async () => {
+      const { data } = await axiosSecure(`/user/${loggedUser?.email}`);
+      return data;
+    },
+  });
 
   const handleReset = () => {
     setPublisherFilter("");
@@ -71,6 +69,12 @@ const {data:user={},isLoading:userLoading}= useQuery({
     setSearch(searchText);
     console.log(searchText);
   };
+
+  const handleViewCount = async (id) => {
+    const { data } = await axiosSecure.put(`/article/${id}`);
+    console.log(data);
+  };
+
 
   const filterArticles = articles.filter((article) => {
     return article.status == "Approved";
@@ -139,7 +143,11 @@ const {data:user={},isLoading:userLoading}= useQuery({
             <button onClick={handleReset}>Reset</button>
             <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4'">
               {filterArticles.map((article) => (
-                <PublicArticleCard user={user} key={article._id} article={article} />
+                <PublicArticleCard
+                  user={user}
+                  key={article._id}
+                  article={article}
+                />
               ))}
             </div>
           </div>
