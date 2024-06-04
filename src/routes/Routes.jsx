@@ -18,6 +18,7 @@ import MyArticles from "../pages/MyArticles/MyArticles";
 import Subscription from "../pages/Subscription/Subscription";
 import Payment from "../pages/Payment/Payment";
 import PremiumArticles from "../pages/PremiumArticles/PremiumArticles";
+import AdminStatistics from "../pages/Dashboard/AdminStatistics/AdminStatistics";
 
 export const router = createBrowserRouter([
   {
@@ -110,7 +111,7 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <AdminRoute>
-              <ArticleStatistics />
+              <AdminStatistics/>
             </AdminRoute>
           </PrivateRoute>
         ),

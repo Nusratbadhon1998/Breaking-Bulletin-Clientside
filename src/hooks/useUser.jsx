@@ -6,7 +6,7 @@ function useUser() {
     const { user, loading } = useAuth()
     const axiosSecure = useAxiosSecure()
   
-    const { data: loggedUser = {}, isLoading } = useQuery({
+    const { data: loggedUser = {}, isLoading,refetch } = useQuery({
       queryKey: ['user', user?.email],
       enabled: !loading && !!user,
       queryFn: async () => {

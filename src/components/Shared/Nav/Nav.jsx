@@ -6,14 +6,12 @@ import { FaSquareFacebook } from "react-icons/fa6";
 import { FaCircle } from "react-icons/fa";
 import useAuth from "../../../hooks/useAuth";
 import useAdmin from "../../../hooks/useAdmin";
-import { useQuery } from "@tanstack/react-query";
 import useUser from "../../../hooks/useUser";
 
 function Nav() {
   const { user, logOut } = useAuth();
   // const [isAdmin,isLoading]= useAdmin()
   const [loggedUser, isLoading] = useUser();
-  console.log(loggedUser)
 
   const navItem = (
     <>
@@ -62,7 +60,7 @@ function Nav() {
       ) : (
         ""
       )}
-      {loggedUser.role === "admin" ? (
+      {user && loggedUser.role === "admin" ? (
         <NavLink
           className={({ isActive }) =>
             isActive ? "text-yellow-500" : "text-stone-700"
@@ -94,14 +92,13 @@ function Nav() {
           {user ? (
             <>
               <Link to="/my-profile" className="avatar online">
-                <div size={5} className="rounded-full w-12 h-12">
+                <div className="relative">
                   <img
-                    className="w-full h-full"
-                    src={
-                      user?.photoURL ||
-                      "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-                    }
+                    className="w-10 h-10 rounded-full"
+                    src={user?.photoURL||"/docs/images/people/profile-picture-5.jpg"}
+                    alt=""
                   />
+                  <span className="top-0 left-7 absolute  w-3.5 h-3.5 bg-green-400 border-2 border-white dark:border-gray-800 rounded-full" />
                 </div>
               </Link>
               <button onClick={() => logOut()}>Logout</button>

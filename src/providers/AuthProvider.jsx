@@ -77,12 +77,10 @@ const AuthProvider = ({ children }) => {
         `${import.meta.env.VITE_BASE_URL}/users`,
         currentUser
       );
-     console.log(data)
       return data;
     },
 
     onSuccess: (currentUser,data) => {
-      console.log(data)
       if (data.prem) {
         toast.warning("Your subscription is over");
       }
@@ -94,7 +92,6 @@ const AuthProvider = ({ children }) => {
   const saveUser = async (user) => {
     const currentUser = {
       email: user?.email,
-      role: "user",
       loginTime: new Date(),
     };
     const { data } = await mutateAsync(currentUser);

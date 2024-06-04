@@ -6,12 +6,14 @@ import AllArticleTable from "../../../components/Dashboard/Table/AllArticleTable
 import { toast } from "react-toastify";
 import { useState } from "react";
 import DeclineModal from "../../../components/Modal/DeclineModal";
+import useArticles from "../../../hooks/useArticles";
 
 function AllArticles() {
   const { user, loading } = useAuth();
   let [isOpen, setIsOpen] = useState(false);
   const [articleId, setArticleId] = useState("");
   const axiosSecure = useAxiosSecure();
+  // const [articles,articleLoading,refetch]= useArticles()
   // get all articles
   const {
     data: articles = [],
