@@ -6,11 +6,14 @@ import { FaSquareFacebook } from "react-icons/fa6";
 import { FaCircle } from "react-icons/fa";
 import useAuth from "../../../hooks/useAuth";
 import useAdmin from "../../../hooks/useAdmin";
+import { useQuery } from "@tanstack/react-query";
+import useUser from "../../../hooks/useUser";
 
 function Nav() {
   const { user, logOut } = useAuth();
-  const [isAdmin,isLoading]= useAdmin()
-  console.log(isAdmin)
+  // const [isAdmin,isLoading]= useAdmin()
+  const [loggedUser, isLoading] = useUser();
+  console.log(loggedUser)
 
   const navItem = (
     <>
@@ -54,9 +57,23 @@ function Nav() {
       >
         My Articles
       </NavLink>
-      {isAdmin==='admin'?<NavLink className={({ isActive }) =>
-          isActive ? "text-yellow-500" : "text-stone-700"
-        }  to='/dashboard'>Dashboard</NavLink>:""}
+      {user && loggedUser.premiumTaken !== null ? (
+        <NavLink to="/premium-articles">Premium Articles</NavLink>
+      ) : (
+        ""
+      )}
+      {loggedUser.role === "admin" ? (
+        <NavLink
+          className={({ isActive }) =>
+            isActive ? "text-yellow-500" : "text-stone-700"
+          }
+          to="/dashboard"
+        >
+          Dashboard
+        </NavLink>
+      ) : (
+        ""
+      )}
     </>
   );
 
@@ -77,11 +94,17 @@ function Nav() {
           {user ? (
             <>
               <Link to="/my-profile" className="avatar online">
-                <div size={5}  className="rounded-full w-12 h-12">
-                  <img className="w-full h-full" src={user?.photoURL || "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"} />
+                <div size={5} className="rounded-full w-12 h-12">
+                  <img
+                    className="w-full h-full"
+                    src={
+                      user?.photoURL ||
+                      "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                    }
+                  />
                 </div>
               </Link>
-              <button onClick={()=>logOut()}>Logout</button>
+              <button onClick={() => logOut()}>Logout</button>
             </>
           ) : (
             <>
@@ -109,4 +132,3 @@ function Nav() {
 }
 
 export default Nav;
-

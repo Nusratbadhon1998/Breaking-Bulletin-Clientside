@@ -13,6 +13,10 @@ import {
 
 import axios from "axios";
 import app from "../firebase/firebase.config";
+import { axiosSecure } from "../hooks/useAxiosSecure";
+import useUser from "../hooks/useUser";
+import { toast } from "react-toastify";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 // create Auth-context
 export const AuthContext = createContext(null);
@@ -21,9 +25,10 @@ const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 
 const AuthProvider = ({ children }) => {
+  const queryClient = useQueryClient();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  // const [loggedUser, isLoading] = useUser();
   const createUser = (email, password) => {
     setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
@@ -66,24 +71,54 @@ const AuthProvider = ({ children }) => {
 
     return data;
   };
+  const { mutateAsync } = useMutation({
+    mutationFn: async (currentUser) => {
+      const { data } = await axios.put(
+        `${import.meta.env.VITE_BASE_URL}/users`,
+        currentUser
+      );
+     console.log(data)
+      return data;
+    },
 
+    onSuccess: (currentUser,data) => {
+      console.log(data)
+      if (data.prem) {
+        toast.warning("Your subscription is over");
+      }
+
+      queryClient.invalidateQueries("user", currentUser.email);
+    },
+  });
   // save user
   const saveUser = async (user) => {
     const currentUser = {
       email: user?.email,
       role: "user",
+      loginTime: new Date(),
     };
-    const { data } = await axios.put(
-      `${import.meta.env.VITE_BASE_URL}/users`,
-      currentUser
-    );
+    const { data } = await mutateAsync(currentUser);
     return data;
   };
+
+  // Check subscription
+  // const checkSubscription = async (email) => {
+  //   const loginTime = new Date();
+  //   try {
+  //     const { data } = await axiosSecure.patch(`/login`, { email, loginTime });
+  //     console.log(data);
+
+  //     if (data) {
+  //       console.log(data);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   // onAuthStateChange
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-        console.log(currentUser)
       const userEmail = currentUser?.email || user?.email;
       const loggedUser = { email: userEmail };
       setUser(currentUser);
@@ -91,9 +126,12 @@ const AuthProvider = ({ children }) => {
       if (currentUser) {
         getToken(loggedUser.email);
         saveUser(currentUser);
+        // checkSubscription(currentUser.email);
       } else {
         axios
-          .get(`${import.meta.env.VITE_BASE_URL}/logout`,{ withCredentials: true })
+          .get(`${import.meta.env.VITE_BASE_URL}/logout`, {
+            withCredentials: true,
+          })
           .then((res) => {
             setLoading(false);
           });
@@ -122,6 +160,5 @@ const AuthProvider = ({ children }) => {
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
   );
 };
-
 
 export default AuthProvider;
