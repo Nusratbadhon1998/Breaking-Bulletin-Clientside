@@ -7,7 +7,7 @@ import "swiper/css/navigation";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import { Typewriter } from "react-simple-typewriter";
 
-function TrendingArticle({ articleViewCount }) {
+function TrendingArticle({ trendingArticles }) {
   return (
     <section className="flex">
       <div className="flex-1 flex flex-col  justify-center text-left space-y-2">
@@ -41,7 +41,7 @@ function TrendingArticle({ articleViewCount }) {
         modules={[Autoplay, Pagination]}
         className="mySwiper w-2/5"
       >
-        {articleViewCount.map((article) => (
+        {trendingArticles.map((article) => (
           <SwiperSlide key={article._id}>
             <img className="w-full h-full" src={article.imageURL} alt="" />
           </SwiperSlide>

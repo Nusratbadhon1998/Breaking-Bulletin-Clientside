@@ -5,7 +5,6 @@ import { FaSquareXTwitter } from "react-icons/fa6";
 import { FaSquareFacebook } from "react-icons/fa6";
 import { FaCircle } from "react-icons/fa";
 import useAuth from "../../../hooks/useAuth";
-import useAdmin from "../../../hooks/useAdmin";
 import useUser from "../../../hooks/useUser";
 import ResponsiveNav from "./ResponsiveNav";
 

@@ -14,11 +14,11 @@ import Plan from "./Plan/Plan";
 function Home() {
   const axiosCommon = useAxiosCommon();
   const { user, loading } = useAuth();
-  const { data: articleViewCount = [], isLoading } = useQuery({
+  const { data: trendingArticles = [], isLoading } = useQuery({
     queryKey: ["article-viewCount"],
     enabled: !loading && !!user,
     queryFn: async () => {
-      const { data } = await axiosCommon.get("/articles-viewCount");
+      const { data } = await axiosCommon.get("/trending-articles");
       return data;
     },
   });
@@ -32,7 +32,7 @@ function Home() {
   }, []);
   return (
     <Container>
-      <TrendingArticle articleViewCount={articleViewCount} />
+      <TrendingArticle trendingArticles={trendingArticles} />
       <h1 className="mt-20 font-bold">Your Source for Reliable Insights</h1>
 
       <Publisher />
