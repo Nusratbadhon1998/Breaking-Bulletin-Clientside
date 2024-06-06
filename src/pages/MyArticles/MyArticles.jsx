@@ -5,21 +5,22 @@ import { useQuery } from "@tanstack/react-query";
 import { axiosSecure } from "../../hooks/useAxiosSecure";
 import Container from "../../components/Shared/Container";
 import DeclineReasonModal from "../../components/Modal/DeclineReasonModal";
+import NoData from "../../components/Shared/NoData";
+import Swal from "sweetalert2";
 
 function MyArticles() {
   const { user, loading } = useAuth();
   let [isOpen, setIsOpen] = useState(false);
   const [id, setId] = useState("");
 
-
   const handleModal = (_id) => {
     setIsOpen(true);
     setId(_id);
-    console.log(id)
+    console.log(id);
   };
-// Getting data
+  // Getting data
   const {
-    data: myArticle = [],
+    data: myArticles = [],
     isLoading,
     refetch,
   } = useQuery({
@@ -31,20 +32,39 @@ function MyArticles() {
     },
   });
 
-  const {data:singleArticle={},isLoading:articleLoading}=useQuery({
-    queryKey:['article',id],
-    queryFn: async()=>{
-      const {data}= await axiosSecure.get(`/article/${id}`)
-      return data
-    }
-  })
+  const { data: singleArticle = {}, isLoading: articleLoading } = useQuery({
+    queryKey: ["article", id],
+    queryFn: async () => {
+      const { data } = await axiosSecure.get(`/article/${id}`);
+      return data;
+      refetch();
+    },
+  });
 
-  const handleDeclineReason = async () => {
-    
-
-    setIsOpen(false);
+  const handleDelete = async (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#000000",
+      cancelButtonColor: "#d33#B2BEB5",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure.delete(`/article/${id}`).then(() => {
+          Swal.fire({
+            title: "Deleted!",
+            text: "Your file has been deleted.",
+            icon: "success",
+          });
+          refetch();
+        });
+      }
+    });
   };
 
+  if (myArticles.length <= 0) return <NoData />;
   return (
     <Container>
       <section className="my-20 mx-auto">
@@ -64,11 +84,10 @@ function MyArticles() {
               </tr>
             </thead>
             <tbody>
-              {myArticle.map((article, idx) => (
+              {myArticles.map((article, idx) => (
                 <MyArticleRow
                   idx={idx}
-                  // handleDelete={handleDelete}
-                  // handleUpdate={handleUpdate}
+                  handleDelete={handleDelete}
                   handleModal={handleModal}
                   article={article}
                   key={article._id}

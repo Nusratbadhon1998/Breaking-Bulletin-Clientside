@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { MdDeleteSweep } from "react-icons/md";
+import { VscSaveAs } from "react-icons/vsc";
+import { CiStickyNote } from "react-icons/ci";
 
-function MyArticleRow({ article, idx,handleModal }) {
+function MyArticleRow({ article, idx, handleModal, handleDelete }) {
   const { status, title, premium, _id } = article;
-
- 
-
 
   return (
     <tr>
@@ -14,25 +14,28 @@ function MyArticleRow({ article, idx,handleModal }) {
       <td>
         <Link to={`/article/${_id}`}>Details</Link>
       </td>
-      {status === "Declined" ? <td>{status}|| <button onClick={()=>handleModal(_id)}>reason</button></td> : <td>{status}</td>}
+      {status === "Declined" ? (
+        <td className="">
+          {status}||
+          <button onClick={() => handleModal(_id)}>
+            <CiStickyNote className="flex items-center justify-center flex-col" />
+          </button>
+        </td>
+      ) : (
+        <td>{status}</td>
+      )}
       <td>{premium}</td>
-      {/* <td>
-      <span
-        className={`${
-          status === "Pending" ? "text-yellow-500 bg-yellow-200 p-2" : ""
-        } ${status === "Approved" ? "text-lime-500 bg-lime-200 p-2" : ""} ${
-          status === "Declined" ? "text-red-500 bg-stone-200 p-2" : ""
-        }`}
-      >
-        {status}
-      </span>
-    </td> */}
+
       <th>
-        <button className="btn btn-ghost btn-xs">Update</button>
+        <Link to={`/update/${_id}`}>
+          <VscSaveAs className="size-6" />
+        </Link>
       </th>
 
       <th>
-        <button className="btn btn-ghost btn-xs">Delete</button>
+        <button onClick={() => handleDelete(_id)}>
+          <MdDeleteSweep className="size-6" />
+        </button>
       </th>
     </tr>
   );

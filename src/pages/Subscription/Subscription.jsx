@@ -4,8 +4,8 @@ import SubscriptionRow from "../../components/Table/SubscriptionRow";
 
 function Subscription() {
   return (
-    <section className="py-20 bg-gray-100 text-gray-800">
-      <section className="bg-gray-100 text-gray-800">
+    <section className="py-20 bg-stone-100 text-gray-800 mt-12">
+      <section className="bg-stone-100 text-gray-800">
         <div className="container mx-auto p-6 overflow-x-auto">
           <table className="w-full">
             <caption className="sr-only">Pricing plan comparison</caption>

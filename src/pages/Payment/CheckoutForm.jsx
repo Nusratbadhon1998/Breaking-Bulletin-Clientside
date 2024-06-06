@@ -124,7 +124,7 @@ function CheckoutForm() {
   };
 
   return (
-    <div className="border p-4 border-black">
+    <div className="border p-4 border-stone-600">
       <form onSubmit={handleSubmit} className="space-y-5 pt-5">
         <div>
           <label className="font-semibold text-base text-stone-500 italic">

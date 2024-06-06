@@ -9,6 +9,7 @@ function ArticleDetails() {
 
   const handleViewCount = async (id) => {
     const { data } = await axiosSecure.put(`/article/${id}`);
+    console.log(data)
   };
   useEffect(() => {
     handleViewCount(id);

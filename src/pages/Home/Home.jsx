@@ -10,6 +10,7 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAxiosCommon from "../../hooks/useAxiosCommon";
 import Publisher from "./Publisher/Publisher";
 import Plan from "./Plan/Plan";
+import ScrollToTopButton from "../../components/Shared/ScrollToTopButton";
 
 function Home() {
   const axiosCommon = useAxiosCommon();
@@ -40,6 +41,7 @@ function Home() {
       <Plan/>
 
       <HomePageModal isOpen={isOpen} setIsOpen={setIsOpen} />
+      <ScrollToTopButton/>
     </Container>
   );
 }

@@ -1,11 +1,11 @@
 import React from 'react'
 
-function Submit() {
+function Submit({value}) {
   return (
     <input
-    className="px-4 py-2 flex justify-center items-center mx-auto border border-black hover:bg-stone-800 hover:text-stone-200 transition-colors duration-300"
+    className="px-4 py-2 w-24 flex justify-center items-center mx-auto bg-stone-800 text-stone-200 hover:bg-stone-700 hover:text-stone-50 transition-colors duration-300"
     type="submit"
-    value="Add"
+    value={value}
   />
   )
 }

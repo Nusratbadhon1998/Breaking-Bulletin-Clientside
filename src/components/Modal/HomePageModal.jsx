@@ -45,10 +45,13 @@ function HomePageModal({isOpen, setIsOpen}) {
                       as="h3"
                       className="text-lg font-medium text-center leading-6 text-gray-900"
                     >
-                     Want to take premium membership
+                     Want to take premium membership?
                     </DialogTitle>
-                    <Link to="/subscription">Subscription</Link>
-                    <button onClick={()=>setIsOpen(false)}>No</button>
+                    <div className="mt-12 flex justify-between">
+                    <Link className="bg-stone-800 text-stone-50  px-4 py-2" to="/subscription">Subscription</Link>
+                    <button className="bg-stone-800 text-stone-50 w-24 px-4 py-2" onClick={()=>setIsOpen(false)}>No</button>
+                    </div>
+                   
                   </DialogPanel>
                 </TransitionChild>
               </div>

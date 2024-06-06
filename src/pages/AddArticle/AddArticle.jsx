@@ -9,12 +9,18 @@ import Container from "../../components/Shared/Container";
 import { imageUpload } from "../../utils/imageApi";
 import { toast } from "react-toastify";
 import useAuth from "../../hooks/useAuth";
+import Header from "../../components/Shared/Header";
+import ScrollToTopButton from "../../components/Shared/ScrollToTopButton";
+import { useNavigate } from "react-router-dom";
 
 function AddArticle() {
   const { user } = useAuth();
   const queryClient = new QueryClient();
-
+  const navigate= useNavigate()
   const axiosSecure = useAxiosSecure();
+  const [selectedTag, setSelectedTag] = useState(null);
+  const [selectedPublisher, setSelectedPublisher] = useState(null);
+
   const { data: publishers = [], isLoading } = useQuery({
     queryKey: ["publishers"],
     queryFn: async () => {
@@ -34,8 +40,8 @@ function AddArticle() {
       queryClient.invalidateQueries({ queryKey: ["articles"] });
     },
   });
-  const [selectedTag, setSelectedTag] = useState(null);
-  const [selectedPublisher, setSelectedPublisher] = useState(null);
+
+ 
 
   const publisherOptions = publishers.map((publisher) => ({
     value: publisher.publisherName,
@@ -62,7 +68,6 @@ function AddArticle() {
 
     try {
       const imageURL = await imageUpload(image);
-
       const articleData = {
         title,
         imageURL,
@@ -76,6 +81,7 @@ function AddArticle() {
       
      const{data}=await mutateAsync(articleData)
 
+navigate('/my-articles')
      form.reset()
      
      console.log(data)
@@ -83,8 +89,11 @@ function AddArticle() {
       console.log(error);
     }
   };
+
+
   return (
     <Container>
+      <Header title={"Add your DEsire article"}/>
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
           <Input label={"Article Title"} name="title" type="text" />
@@ -111,8 +120,9 @@ function AddArticle() {
           name="description"
           id=""
         ></textarea>
-        <Submit />
+        <Submit value="Add" />
       </form>
+      <ScrollToTopButton/>
     </Container>
   );
 }
