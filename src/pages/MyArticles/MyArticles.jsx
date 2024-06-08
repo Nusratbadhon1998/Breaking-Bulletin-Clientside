@@ -64,7 +64,7 @@ function MyArticles() {
     });
   };
 
-  if (myArticles.length <= 0) return <NoData />;
+  if (myArticles.length <= 0) return <NoData title="You Haven't added any data yet" />;
   return (
     <Container>
       <section className="my-20 mx-auto">

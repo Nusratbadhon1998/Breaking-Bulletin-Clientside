@@ -48,13 +48,14 @@ function AddArticle() {
     label: publisher.publisherName,
   }));
   const tagsOptions = [
-    { value: "technology", label: "Technology" },
-    { value: "environment", label: "Environment" },
-    { value: "healthcare", label: "Healthcare" },
-    { value: "cyber-security", label: "CyberSecurity" },
-    { value: "finance", label: "Finance" },
-    { value: "society", label: "Society" },
-    { value: "global-market", label: "GlobalMarket" },
+    { value: "Technology", label: "Technology" },
+    { value: "Environment", label: "Environment" },
+    { value: "Healthcare", label: "Healthcare" },
+    { value: "Cyber-security", label: "CyberSecurity" },
+    { value: "Finance", label: "Finance" },
+    { value: "Society", label: "Society" },
+    { value: "Sports", label: "Sports" },
+    { value: "Global-market", label: "GlobalMarket" },
   ];
 
   const handleSubmit = async (e) => {

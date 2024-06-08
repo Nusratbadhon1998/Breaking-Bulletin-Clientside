@@ -30,7 +30,7 @@ function CheckoutForm() {
         });
     }
   }, [axiosSecure, price]);
-
+  console.log("CCCC", clientSecret, price);
   const { mutateAsync } = useMutation({
     mutationFn: async (premiumTakenDate) => {
       const premiumTakenDateFormatted = new Date(
@@ -55,14 +55,6 @@ function CheckoutForm() {
     const time = form.time.value;
     setDay(time);
     console.log("time", time);
-
-    if (time === "1 min") {
-      setPrice(5);
-    } else if (time === "5 day") {
-      setPrice(15);
-    } else if (time === "10 day") {
-      setPrice(25);
-    }
 
     if (!stripe || !elements) {
       return;
@@ -167,7 +159,20 @@ function CheckoutForm() {
             Choose Plan
           </label>
 
-          <select className="w-full border p-4 " name="time" defaultValue="">
+          <select
+            onChange={(e) => {
+              if (e.target.value === "1 min") {
+                setPrice(5);
+              } else if (e.target.value === "5 day") {
+                setPrice(15);
+              } else if (e.target.value === "10 day") {
+                setPrice(25);
+              }
+            }}
+            className="w-full border p-4 "
+            name="time"
+            defaultValue=""
+          >
             <option value="" disabled>
               Choose Duration
             </option>

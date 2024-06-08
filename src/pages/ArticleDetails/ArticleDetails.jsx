@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { FaUser } from "react-icons/fa6";
 
 function ArticleDetails() {
   const { id } = useParams();
@@ -9,7 +10,6 @@ function ArticleDetails() {
 
   const handleViewCount = async (id) => {
     const { data } = await axiosSecure.put(`/article/${id}`);
-    console.log(data)
   };
   useEffect(() => {
     handleViewCount(id);
@@ -54,14 +54,14 @@ function ArticleDetails() {
                   <img
                     src={authorImage}
                     alt=""
-                    className="w-4 h-4 border rounded-full dark:bg-gray-500 dark:border-gray-300"
+                    className="size-12 border rounded-full dark:bg-gray-500 dark:border-gray-300"
                   />
                   <p className="text-sm">
                     {authorName} • {new Date(postedDate).toLocaleDateString()}
                   </p>
                 </div>
                 <p className="flex-shrink-0 mt-3 text-sm md:mt-0">
-                  {viewCount && viewCount}
+                  {viewCount && <p className="flex items-center gap-2"> <FaUser/>{`Viewed By ${viewCount} people`}</p>}
                 </p>
               </div>
             </div>
@@ -74,14 +74,14 @@ function ArticleDetails() {
               <a
                 rel="noopener noreferrer"
                 href="#"
-                className="px-3 py-1 rounded-sm hover:underline dark:bg-violet-600 dark:text-gray-50"
+                className="px-3 py-1 bg-yellow-100 text-yellow-500"
               >
                 #{publisher}
               </a>
               <a
                 rel="noopener noreferrer"
                 href="#"
-                className="px-3 py-1 rounded-sm hover:underline dark:bg-violet-600 dark:text-gray-50"
+                className="px-3 py-1  bg-stone-800 text-stone-200"
               >
                 #{tag}
               </a>

@@ -5,6 +5,11 @@ import axios from "axios";
 import PublicArticleCard from "../../components/Card/PublicArticleCard";
 import Container from "../../components/Shared/Container";
 import useAuth from "../../hooks/useAuth";
+import { IoNewspaperOutline } from "react-icons/io5";
+import { GrPowerReset } from "react-icons/gr";
+
+import Header from "../../components/Shared/Header";
+import NoData from "../../components/Shared/NoData";
 
 function PublicArticles() {
   const { user: loggedUser = {}, loading } = useAuth();
@@ -17,14 +22,14 @@ function PublicArticles() {
   const [searchText, setSearchText] = useState("");
 
   const tags = [
-    "technology",
-    "environment",
-    "healthcare",
-    "cyber-security",
-    "finance",
-    ,
-    "society",
-    "global-market",
+    "Technology",
+    "Environment",
+    "Healthcare",
+    "Cyber-security",
+    "Finance",
+    "Society",
+    "Global-market",
+    "Sports",
   ];
 
   //   Get all the articles
@@ -70,27 +75,22 @@ function PublicArticles() {
     console.log(searchText);
   };
 
-  const handleViewCount = async (id) => {
-    const { data } = await axiosSecure.put(`/article/${id}`);
-    console.log(data);
-  };
-
-
-  const filterArticles = articles.filter((article) => {
-    return article.status == "Approved";
-  });
-
   return (
     <Container>
       <div className="my-20">
+        <Header title="Explore Articles" />
         <div className="flex min-h-screen gap-6">
           {/* FIlter */}
           <div className="w-2/6">
             {/* Publisher */}
             <div>
-              <h1>Publisher</h1>
+              <h1 className="text-xl font-bold flex items-center gap-3">
+                {" "}
+                <IoNewspaperOutline />
+                Publisher
+              </h1>
               <div className="divider"></div>
-              <ol>
+              <ol className="space-y-3  text-stone-600">
                 {publishers.map((publisher) => (
                   <li key={publisher._id}>
                     <button
@@ -104,11 +104,12 @@ function PublicArticles() {
                 ))}
               </ol>
             </div>
+            <div className="divider"></div>
             {/* Tags */}
             <div className="my-5">
-              <h1>Tags</h1>
+              <h1 className="text-xl font-bold">Tags</h1>
               <div className="divider"></div>
-              <ul>
+              <ul className="space-y-3 text-stone-600">
                 {tags.map((tag, idx) => (
                   <li key={idx}>
                     <button
@@ -121,28 +122,41 @@ function PublicArticles() {
                   </li>
                 ))}
               </ul>
+              <div className="divider"></div>
             </div>
           </div>
-          <div>
-            <form className="my-12" onSubmit={handleSearch}>
-              <div className="flex p-1 overflow-hidden border rounded-lg    focus-within:ring focus-within:ring-opacity-40 focus-within:border-blue-400 focus-within:ring-blue-300">
+          <div className="grid grid-cols-1">
+            <div className="flex justify-between h-20 items-center">
+              <button
+                onClick={() => setSort(true)}
+                className="border px-4 py-2 border-b-stone-700 hover:bg-stone-900 hover:text-stone-200 transition-colors ease-in duration-150"
+              >
+                Sort By Popularity
+              </button>
+              <form className="my-12" onSubmit={handleSearch}>
                 <input
-                  className="px-6 py-2 text-gray-700 placeholder-gray-500 bg-white outline-none focus:placeholder-transparent"
+                  className="px-4 border border-b-stone-800 py-2 text-stone-700 placeholder-stone-500 bg-white outline-none focus:placeholder-transparent"
                   type="text"
                   onChange={(e) => setSearchText(e.target.value)}
                   value={searchText}
                   name="search"
                   placeholder="Enter Title"
                 />
-
-                <button className="px-1 md:px-4 py-3 text-sm font-medium tracking-wider text-gray-100 uppercase transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:bg-gray-600 focus:outline-none">
+                <button className="px-1 md:px-4 lg:px-4 py-2 text-sm font-medium  text-gray-100 uppercase transition-colors duration-300 transform bg-stone-800  hover:bg-gray-600 focus:bg-gray-600 focus:outline-none">
                   Search
                 </button>
-              </div>
-            </form>
-            <button onClick={handleReset}>Reset</button>
+              </form>
+              <button
+                className="bg-stone-800 px-4 py-2 flex gap-2 items-center text-stone-200 *:text-stone-200"
+                onClick={handleReset}
+              >
+                <GrPowerReset /> Reset
+              </button>
+            </div>
+            {articles.length <= 0? <div className="flex justify-center items-center mx-auto"><NoData title="Data is not available"/></div>:""}
+
             <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4'">
-              {filterArticles.map((article) => (
+              {articles.map((article) => (
                 <PublicArticleCard
                   user={user}
                   key={article._id}

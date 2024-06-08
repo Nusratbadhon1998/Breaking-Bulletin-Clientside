@@ -1,7 +1,7 @@
 import React from "react";
 import noData from "../../assets/noData.gif";
 
-function NoData() {
+function NoData({title}) {
   return (
     <div class="grid h-screen place-content-center bg-white px-4">
       <div class="text-center flex flex-col justify-center items-center">
@@ -11,7 +11,7 @@ function NoData() {
           Oh-oh!
         </h1>
 
-        <p class="mt-4 text-gray-500">You haven't added any data yet</p>
+        <p class="mt-4 text-gray-500">{title}</p>
       </div>
     </div>
   );
