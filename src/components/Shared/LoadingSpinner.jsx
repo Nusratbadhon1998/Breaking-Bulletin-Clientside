@@ -10,7 +10,7 @@ function LoadingSpinner() {
     justify-center 
     items-center"
   >
-    <HashLoader size={100} color='red' />
+    <HashLoader size={100} color='black' />
   </div>
   )
 }

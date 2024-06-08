@@ -10,6 +10,7 @@ import { GrPowerReset } from "react-icons/gr";
 
 import Header from "../../components/Shared/Header";
 import NoData from "../../components/Shared/NoData";
+import LoadingSpinner from "../../components/Shared/LoadingSpinner";
 
 function PublicArticles() {
   const { user: loggedUser = {}, loading } = useAuth();
@@ -153,17 +154,22 @@ function PublicArticles() {
                 <GrPowerReset /> Reset
               </button>
             </div>
-            {articles.length <= 0? <div className="flex justify-center items-center mx-auto"><NoData title="Data is not available"/></div>:""}
-
-            <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4'">
-              {articles.map((article) => (
-                <PublicArticleCard
-                  user={user}
-                  key={article._id}
-                  article={article}
-                />
-              ))}
-            </div>
+            {isLoading && <LoadingSpinner />}
+            {articles.length <= 0 ? (
+              <div className="mx-auto">
+                <NoData title="Data is not available" />
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4'">
+                {articles.map((article) => (
+                  <PublicArticleCard
+                    user={user}
+                    key={article._id}
+                    article={article}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </div>
 

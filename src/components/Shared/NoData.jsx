@@ -3,7 +3,7 @@ import noData from "../../assets/noData.gif";
 
 function NoData({title}) {
   return (
-    <div class="grid h-screen place-content-center bg-white px-4">
+    <div class="grid  place-content-center bg-white px-4">
       <div class="text-center flex flex-col justify-center items-center">
         <img className="size-40" src={noData} alt="" />
 

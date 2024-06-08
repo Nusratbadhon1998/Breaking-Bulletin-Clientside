@@ -61,7 +61,7 @@ function Home() {
       </div>
       <div className="divider  divider-neutral"></div>
       <div>
-        <Category/>
+        <Category trendingArticles={trendingArticles}/>
       </div>
 
       <h1 className="mt-20 font-bold">Your Source for Reliable Insights</h1>
