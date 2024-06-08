@@ -2,18 +2,38 @@ import React from "react";
 import useAuth from "../../hooks/useAuth";
 import Container from "../../components/Shared/Container";
 import Input from "../../components/Form/Input";
+import Header from "../../components/Shared/Header";
+import { toast } from "react-toastify";
+import Submit from "../../components/Shared/Button/Submit";
+import { imageUpload } from "../../utils/imageApi";
 
 function MyProfile() {
+  const { user, updateUserProfile,setUser } = useAuth();
+  const handleUpdate = async (e) => {
+    console.log("first");
 
-  const { user } = useAuth();
-  const handleUpdate=()=>{
-    console.log("first")
-  }
+    e.preventDefault();
+
+    const userName = e.target.name.value;
+    const email = user?.email;
+    const image = e.target.image.files[0];
+
+    try {
+      const imageURL = await imageUpload(image);
+      await updateUserProfile(userName, imageURL);
+
+      setUser({ email: email, displayName: userName, photoURL: imageURL });
+      toast.success("Profile Updated")
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <Container>
+      <Header title={"Update"} />
       <div className="flex justify-between">
-        <div className=" border border-black  p-8 sm:flex sm:space-x-6 dark:bg-gray-50 dark:text-gray-800">
-          <div className="flex-shrink-0 w-full mb-6 h-44 sm:h-32 sm:w-32 sm:mb-0 bg-stone-100/">
+        <div className=" border border-black flex items-center  p-8 sm:flex sm:space-x-6 dark:bg-gray-50 dark:text-gray-800">
+          <div className="flex-shrink-0  w-full mb-6 h-44 sm:h-32 sm:w-32 sm:mb-0 bg-stone-100/">
             <img
               src={user?.photoURL}
               alt=""
@@ -43,12 +63,21 @@ function MyProfile() {
           </div>
         </div>
         <div>
-          <form onSubmit={handleUpdate} className="space-y-5">
-            <Input name={"name"} label="User Name" type="text" defaultValue={user?.displayName}/>
-            <Input name={"email"} label="Email" type="email" defaultValue={user?.email}/>
+          <form onSubmit={handleUpdate} className="space-y-5 border p-5">
+            <Input
+              name={"name"}
+              label="User Name"
+              type="text"
+              defaultValue={user?.displayName}
+            />
+            <Input
+              name={"email"}
+              label="Email"
+              type="email"
+              defaultValue={user?.email}
+            />
             <Input name={"image"} label="Photo" type="file" />
-            
-            
+            <Submit value="Update"/>
           </form>
         </div>
       </div>

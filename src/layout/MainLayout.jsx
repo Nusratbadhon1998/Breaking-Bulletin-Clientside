@@ -6,8 +6,8 @@ import Container from "../components/Shared/Container";
 function MainLayout() {
   return (
     <div>
+      <Nav />
       <Container>
-        <Nav />
         <div className="min-h-[calc(100vh-360px)]">
           <Outlet />
         </div>

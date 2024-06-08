@@ -6,11 +6,13 @@ import "swiper/css/navigation";
 
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import { Typewriter } from "react-simple-typewriter";
+import { FaArrowRight } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 function TrendingArticle({ trendingArticles }) {
   return (
-    <section className="flex">
-      <div className="flex-1 flex flex-col  justify-center text-left space-y-2">
+    <section className="">
+      {/* <div className="flex-1 flex flex-col  justify-center text-left space-y-2">
         <h1 className="text-stone-800 font-bold text-left my-8 text-4xl">
           <Typewriter
             cursor
@@ -28,7 +30,7 @@ function TrendingArticle({ trendingArticles }) {
           Discover insights that matter, from groundbreaking research to
           innovative breakthroughs
         </p>
-      </div>
+      </div> */}
       <Swiper
         spaceBetween={30}
         centeredSlides={true}
@@ -39,11 +41,29 @@ function TrendingArticle({ trendingArticles }) {
           clickable: true,
         }}
         modules={[Autoplay, Pagination]}
-        className="mySwiper w-2/5"
+        className="mySwiper"
       >
-        {trendingArticles.map((article) => (
+        {trendingArticles.slice(0, 6).map((article) => (
           <SwiperSlide key={article._id}>
-            <img className="w-full h-full" src={article.imageURL} alt="" />
+            <div className=" border h-full p-5">
+              <figure>
+                <img
+                  className="aspect-[3/2] border  p-2 grayscale transition-all delay-75 hover:cursor-auto duration-150 hover:grayscale-0"
+                  src={article.imageURL}
+                  alt={article.title}
+                />
+              </figure>
+              <div className="card-body">
+                <h2 className=" text-center text-xl font-bold">
+                  {article.title}!
+                </h2>
+                <div className="card-actions justify-end mt-5">
+                  <Link to={`/article/${article._id}`}>
+                    <FaArrowRight />
+                  </Link>
+                </div>
+              </div>
+            </div>
           </SwiperSlide>
         ))}
       </Swiper>

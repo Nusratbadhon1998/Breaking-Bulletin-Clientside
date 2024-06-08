@@ -3,10 +3,11 @@ import { Link, NavLink } from "react-router-dom";
 
 import { FaSquareXTwitter } from "react-icons/fa6";
 import { FaSquareFacebook } from "react-icons/fa6";
-import { FaCircle } from "react-icons/fa";
+import { FaCircle, FaUser } from "react-icons/fa";
 import useAuth from "../../../hooks/useAuth";
 import useUser from "../../../hooks/useUser";
 import ResponsiveNav from "./ResponsiveNav";
+import { CiLogout } from "react-icons/ci";
 
 function Nav() {
   const { user, logOut } = useAuth();
@@ -17,7 +18,7 @@ function Nav() {
     <>
       <NavLink
         className={({ isActive }) =>
-          isActive ? "text-yellow-500" : "text-stone-700"
+          isActive ? "underline" : ""
         }
         to="/"
       >
@@ -25,7 +26,7 @@ function Nav() {
       </NavLink>
       <NavLink
         className={({ isActive }) =>
-          isActive ? "text-yellow-500" : "text-stone-700"
+          isActive ? "underline" : ""
         }
         to="/add-article"
       >
@@ -33,7 +34,7 @@ function Nav() {
       </NavLink>
       <NavLink
         className={({ isActive }) =>
-          isActive ? "text-yellow-500" : "text-stone-700"
+          isActive ? "underline" : ""
         }
         to="/all-articles"
       >
@@ -41,7 +42,7 @@ function Nav() {
       </NavLink>
       <NavLink
         className={({ isActive }) =>
-          isActive ? "text-yellow-500" : "text-stone-700"
+          isActive ? "underline" : ""
         }
         to="/subscription"
       >
@@ -49,7 +50,7 @@ function Nav() {
       </NavLink>
       <NavLink
         className={({ isActive }) =>
-          isActive ? "text-yellow-500" : "text-stone-700"
+          isActive ? "underline" : ""
         }
         to="/my-articles"
       >
@@ -63,7 +64,7 @@ function Nav() {
       {user && loggedUser.role === "admin" ? (
         <NavLink
           className={({ isActive }) =>
-            isActive ? "text-yellow-500" : "text-stone-700"
+            isActive ? "underline" : ""
           }
           to="/dashboard"
         >
@@ -77,14 +78,14 @@ function Nav() {
 
   return (
     <nav>
-      <div className="hidden md:block lg:block">
+      <div className="hidden md:block lg:block pt-5">
         <div>
           <h1 className="text-3xl jacquard-24-charted-regular text-center ">
             Breaking Bulletin
           </h1>
         </div>
-        <div className="flex justify-between">
-          <div className="flex items-center gap-5">
+        <div className="flex justify-between px-10">
+          <div className="flex items-center gap-5 *:size-8">
             <FaSquareFacebook />
             <FaSquareXTwitter />
           </div>
@@ -105,25 +106,39 @@ function Nav() {
                     </div>
                   </div>
                 </Link>
-                <button onClick={() => logOut()}>Logout</button>
+                <button
+                  className="font-semibold italic flex items-center gap-2 border px-4 py-2 border-black transition-colors duration-150 ease-linear hover:bg-stone-800 hover:text-stone-200"
+                  onClick={() => logOut()}
+                >
+                  <CiLogout />
+                  Logout
+                </button>
               </>
             ) : (
               <>
                 {" "}
                 <div className="flex items-center gap-2">
-                  <FaCircle size={5} />
-                  <Link to="/login">Login</Link>
+                  <FaUser size={9} />
+                  <Link className="font-semibold italic underline" to="/login">
+                    Login
+                  </Link>
                 </div>
+                <p className="font-bold">/</p>
                 <div className="flex items-center gap-2">
-                  <FaCircle size={5} />
-                  <button>Register</button>
+                  <FaUser size={9} />
+                  <Link
+                    className="font-semibold italic underline"
+                    to="/register"
+                  >
+                    Register
+                  </Link>
                 </div>
               </>
             )}
           </div>
         </div>
         <div className="divider divider-neutral"></div>
-        <div className="flex">
+        <div className="flex bg-stone-800 p-3 text-stone-200">
           <ul className="menu menu-horizontal px-1 text-center mx-auto space-x-5 font-bold">
             {navItem}
           </ul>
