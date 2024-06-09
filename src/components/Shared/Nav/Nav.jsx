@@ -59,7 +59,8 @@ function Nav() {
       >
         My Articles
       </NavLink></>}
-      {user && loggedUser.premiumTaken !== null ? (
+
+      {user && loggedUser?.premiumTaken &&  loggedUser?.premiumTaken !== null ? (
         <NavLink to="/premium-articles">Premium Articles</NavLink>
       ) : (
         ""

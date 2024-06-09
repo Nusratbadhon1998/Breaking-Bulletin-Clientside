@@ -20,7 +20,6 @@ function CheckoutForm() {
   const { user } = useAuth();
 
   useEffect(() => {
-    console.log(price);
     if (price > 0) {
       axiosSecure
         .post("/create-payment-intent", { price: price })
@@ -30,18 +29,17 @@ function CheckoutForm() {
         });
     }
   }, [axiosSecure, price]);
-  console.log("CCCC", clientSecret, price);
+
   const { mutateAsync } = useMutation({
     mutationFn: async (premiumTakenDate) => {
       const premiumTakenDateFormatted = new Date(
         premiumTakenDate
-      ).toISOString();
-      console.log(premiumTakenDateFormatted); // Ensure correct date format
+        ).toISOString();
+      console.log(premiumTakenDateFormatted)
 
       const res = await axiosSecure.patch(`/user/${user?.email}`, {
         premiumTakenDate: premiumTakenDateFormatted,
       });
-      console.log(res);
     },
     onSuccess: () => {
       toast.success("Payment Successful");
@@ -54,7 +52,7 @@ function CheckoutForm() {
     const form = event.target;
     const time = form.time.value;
     setDay(time);
-    console.log("time", time);
+    console.log(time)
 
     if (!stripe || !elements) {
       return;
@@ -100,15 +98,14 @@ function CheckoutForm() {
         setTransactionId(paymentIntent.id);
 
         let premiumTakenDate = new Date();
-        if (day === "1 min") {
+        if (time === "1 min") {
           premiumTakenDate.setMinutes(premiumTakenDate.getMinutes() + 1);
-        } else if (day === "5 day") {
+        } else if (time === "5 day") {
           premiumTakenDate.setDate(premiumTakenDate.getDate() + 5);
-        } else if (day === "10 day") {
+        } else if (time === "10 day") {
           premiumTakenDate.setDate(premiumTakenDate.getDate() + 10);
         }
 
-        console.log(premiumTakenDate);
 
         mutateAsync(premiumTakenDate);
       }

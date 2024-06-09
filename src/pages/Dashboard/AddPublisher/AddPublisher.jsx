@@ -5,7 +5,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { imageUpload } from "../../../utils/imageApi";
 import { toast } from "react-toastify";
 import Submit from "../../../components/Shared/Button/Submit";
-
+import newspaper from "../../../assets/newpaper.jpg";
 function AddPublisher() {
   const axiosSecure = useAxiosSecure();
 
@@ -33,12 +33,21 @@ function AddPublisher() {
     } catch {}
   };
   return (
-    <section className="flex bg-stone-300 justify-center items-center mx-auto min-h-screen">
-      <form onSubmit={handlePublish} className="flex flex-col space-y-5">
-        <Input label={"Publisher Name"} name={"publisherName"} type={"text"} />
-        <input type="file" name="image" id="" />
-        <Submit />
-      </form>
+    <section className="flex flex-col justify-center items-center mx-auto min-h-screen bg-[url(https://t4.ftcdn.net/jpg/03/00/85/23/360_F_300852364_qSrtNxY6pokaVR7er7knpb8AyYJSxtUd.jpg)]">
+        
+        <form
+          onSubmit={handlePublish}
+          className="flex flex-col bg-white justify-center space-y-5 border p-6"
+        >
+          <h1 className="text-center text-2xl">Add Publisher</h1>
+          <Input
+            label={"Publisher Name"}
+            name={"publisherName"}
+            type={"text"}
+          />
+          <input type="file" name="image" id="" />
+          <Submit />
+        </form>
     </section>
   );
 }

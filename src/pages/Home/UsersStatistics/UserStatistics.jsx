@@ -13,7 +13,7 @@ import { MdWorkspacePremium } from "react-icons/md";
 function UserStatistics() {
   const axiosCommon = useAxiosCommon();
   const { data: users = {}, isLoading } = useQuery({
-    queryKey: ["users"],
+    queryKey: ["users-count"],
     queryFn: async () => {
       const { data } = await axiosCommon.get("/users-count");
       return data;

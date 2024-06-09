@@ -71,29 +71,36 @@ const AuthProvider = ({ children }) => {
 
     return data;
   };
+
   const { mutateAsync } = useMutation({
     mutationFn: async (currentUser) => {
+      console.log(currentUser)
       const { data } = await axios.put(
         `${import.meta.env.VITE_BASE_URL}/users`,
         currentUser
       );
+      console.log(data);
       return data;
     },
-
-    onSuccess: (currentUser,data) => {
-      if (data.prem) {
+  
+    onSuccess: (data, currentUser) => {
+      if (data.premiumReset) {
         toast.warning("Your subscription is over");
       }
-
+  
       queryClient.invalidateQueries("user", currentUser.email);
     },
   });
+  
   // save user
   const saveUser = async (user) => {
     const currentUser = {
       email: user?.email,
+      name:user?.displayName ||"Anonymous",
+      photo: user?.photoURL || "No Photo",
       loginTime: new Date(),
     };
+    console.log(currentUser)
     const { data } = await mutateAsync(currentUser);
     return data;
   };
@@ -123,7 +130,6 @@ const AuthProvider = ({ children }) => {
       if (currentUser) {
         getToken(loggedUser.email);
         saveUser(currentUser);
-        // checkSubscription(currentUser.email);
       } else {
         axios
           .get(`${import.meta.env.VITE_BASE_URL}/logout`, {

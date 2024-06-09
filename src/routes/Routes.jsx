@@ -20,12 +20,13 @@ import Payment from "../pages/Payment/Payment";
 import PremiumArticles from "../pages/PremiumArticles/PremiumArticles";
 import AdminStatistics from "../pages/Dashboard/AdminStatistics/AdminStatistics";
 import UpdateArticle from "../pages/UpdateArticle/UpdateArticle";
+import Error from "../pages/Error/Error";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
-    errorElement: <p>Error</p>,
+    errorElement: <Error/>,
     children: [
       {
         path: "/",
