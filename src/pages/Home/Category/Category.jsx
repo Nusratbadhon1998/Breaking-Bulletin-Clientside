@@ -41,7 +41,7 @@ function Category({ trendingArticles }) {
   const sports = trendingArticles.filter((article) => article.tag === "Sports");
 
   return (
-    <Tabs className="my-12">
+    <Tabs className="my-12 ">
       <TabList className="flex justify-center items-center">
         {tags.map((tag, idx) => (
           <Tab key={idx} className={tabClass}>

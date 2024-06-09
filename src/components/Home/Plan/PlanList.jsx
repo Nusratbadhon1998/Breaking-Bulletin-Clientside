@@ -4,7 +4,7 @@ function PlanList({ icon: Icon, text }) {
   return (
     <li className="flex items-center gap-1">
       <Icon />
-      <span className="text-gray-700"> {text} </span>
+      <span> {text} </span>
     </li>
   );
 }

@@ -75,7 +75,7 @@ function Subscription() {
         </div>
       </section>
       <div className="flex justify-center items-center">
-      <Link className="border border-black px-4 py-2" to="/payment"> Take Subscription</Link>
+      <Link className="border border-black px-4 py-2 hover:bg-stone-800 hover:text-stone-200 transition-colors duration-150 " to="/payment"> Take Subscription</Link>
 
       </div>
     </section>

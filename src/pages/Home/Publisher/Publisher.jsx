@@ -13,7 +13,7 @@ function Publisher() {
     },
   });
   return (
-    <section className="flex justify-center items-center overflow-x-auto gap-10 mt-10">
+    <section className="flex justify-center items-center overflow-x-auto gap-10 mt-10 ">
       <Marquee className="h-24">
         {publishers.map((publisher) => (
           <img

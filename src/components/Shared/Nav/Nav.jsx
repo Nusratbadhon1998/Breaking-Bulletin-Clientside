@@ -28,17 +28,20 @@ function Nav() {
         className={({ isActive }) =>
           isActive ? "underline" : ""
         }
-        to="/add-article"
-      >
-        Add Articles
-      </NavLink>
-      <NavLink
-        className={({ isActive }) =>
-          isActive ? "underline" : ""
-        }
         to="/all-articles"
       >
         All Articles
+      </NavLink>
+   
+     
+      {user && <>
+        <NavLink
+        className={({ isActive }) =>
+          isActive ? "underline" : ""
+        }
+        to="/add-article"
+      >
+        Add Articles
       </NavLink>
       <NavLink
         className={({ isActive }) =>
@@ -55,7 +58,7 @@ function Nav() {
         to="/my-articles"
       >
         My Articles
-      </NavLink>
+      </NavLink></>}
       {user && loggedUser.premiumTaken !== null ? (
         <NavLink to="/premium-articles">Premium Articles</NavLink>
       ) : (
@@ -80,7 +83,7 @@ function Nav() {
     <nav>
       <div className="hidden md:block lg:block pt-5">
         <div>
-          <h1 className="text-3xl jacquard-24-charted-regular text-center ">
+          <h1 className="text-5xl jacquard-24-charted-regular text-center ">
             Breaking Bulletin
           </h1>
         </div>

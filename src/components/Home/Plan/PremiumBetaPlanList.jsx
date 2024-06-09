@@ -1,6 +1,7 @@
 import React from 'react'
-import { FaNotEqual, FaRightFromBracket } from "react-icons/fa6";
+import { FaChevronRight, FaNotEqual, FaRightFromBracket } from "react-icons/fa6";
 import PlanList from './PlanList';
+import { RxCross1 } from 'react-icons/rx';
 
 function PremiumBetaPlanList() {
     return (
@@ -10,12 +11,11 @@ function PremiumBetaPlanList() {
           </p>
     
           <ul className="mt-2 space-y-2 sm:mt-4">
-            <PlanList text="Explore normal articles" icon={FaRightFromBracket} />
-            <PlanList text="Add One Article" icon={FaRightFromBracket} />
-            <PlanList text="Add Unlimited Articles" icon={FaRightFromBracket} />
-            <PlanList text="Register" icon={FaRightFromBracket} />
-            <PlanList text="Explore premium articles" icon={FaRightFromBracket} />
-            <PlanList text="Add Unlimited Articles" icon={FaRightFromBracket} />
+            <PlanList text="Access to normal articles" icon={FaChevronRight} />
+            <PlanList text="Add Unlimited Articles" icon={FaChevronRight} />
+            <PlanList text="Register" icon={FaChevronRight} />
+            <PlanList text="Explore premium articles" icon={FaChevronRight} />
+           
           </ul>
         </div>
       );
