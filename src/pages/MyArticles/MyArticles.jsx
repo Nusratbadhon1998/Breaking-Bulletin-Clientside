@@ -36,8 +36,8 @@ function MyArticles() {
     queryKey: ["article", id],
     queryFn: async () => {
       const { data } = await axiosSecure.get(`/article/${id}`);
+
       return data;
-      refetch();
     },
   });
 
@@ -48,7 +48,7 @@ function MyArticles() {
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#000000",
-      cancelButtonColor: "#d33#B2BEB5",
+      cancelButtonColor: "#B2BEB5",
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
@@ -64,7 +64,8 @@ function MyArticles() {
     });
   };
 
-  if (myArticles.length <= 0) return <NoData title="You Haven't added any data yet" />;
+  if (myArticles.length <= 0)
+    return <NoData title="You Haven't added any data yet" />;
   return (
     <Container>
       <section className="my-20 mx-auto">

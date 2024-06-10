@@ -14,7 +14,7 @@ import { GiSettingsKnobs } from "react-icons/gi";
 function Sidebar() {
   const { logOut } = useAuth();
   return (
-    <div className="flex flex-col text-stone-200">
+    <div className="hidden lg:flex lg:flex-col text-stone-200">
       <div >
         <div className="flex items-center gap-3 text-3xl">
           <HiNewspaper />

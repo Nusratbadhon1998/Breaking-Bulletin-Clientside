@@ -16,6 +16,7 @@ function Category({ trendingArticles }) {
     "Society",
     "Global-market",
     "Sports",
+    "International"
   ];
   const technologies = trendingArticles.filter(
     (article) => article.tag === "Technology"
@@ -37,6 +38,9 @@ function Category({ trendingArticles }) {
   );
   const gmarkets = trendingArticles.filter(
     (article) => article.tag === "Global-market"
+  );
+  const international = trendingArticles.filter(
+    (article) => article.tag === "International"
   );
   const sports = trendingArticles.filter((article) => article.tag === "Sports");
 
@@ -72,6 +76,9 @@ function Category({ trendingArticles }) {
       </TabPanel>
       <TabPanel>
         <CategoryGrid articles={sports} />
+      </TabPanel>
+      <TabPanel>
+        <CategoryGrid articles={international} />
       </TabPanel>
     </Tabs>
   );

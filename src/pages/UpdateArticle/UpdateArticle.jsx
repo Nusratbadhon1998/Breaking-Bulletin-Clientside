@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
@@ -13,6 +13,8 @@ import useAuth from "../../hooks/useAuth";
 import { toast } from "react-toastify";
 
 function UpdateArticle() {
+  const queryClient = useQueryClient();
+
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
   const { user, loading } = useAuth();
@@ -25,7 +27,7 @@ function UpdateArticle() {
       return data;
     },
   });
-  const { data: article = {}, isLoading } = useQuery({
+  const { data: article = {}, isLoading,refetch } = useQuery({
     queryKey: ["article", id],
     queryFn: async () => {
       const { data } = await axiosSecure.get(`/article/${id}`);
@@ -36,9 +38,11 @@ function UpdateArticle() {
   const { mutateAsync } = useMutation({
     mutationFn: async (articleData) => {
       const { data } = axiosSecure.put(`article/${article._id}`, articleData);
+      console.log(data)
       return data;
     },
     onSuccess: () => {
+      queryClient.invalidateQueries("article", id);
       toast.success("Updated Successfully");
       navigate('/my-articles')
     },
@@ -86,13 +90,15 @@ function UpdateArticle() {
     label: publisher.publisherName,
   }));
   const tagsOptions = [
-    { value: "technology", label: "Technology" },
-    { value: "environment", label: "Environment" },
-    { value: "healthcare", label: "Healthcare" },
-    { value: "cyber-security", label: "CyberSecurity" },
-    { value: "finance", label: "Finance" },
-    { value: "society", label: "Society" },
-    { value: "global-market", label: "GlobalMarket" },
+    { value: "Technology", label: "Technology" },
+    { value: "Environment", label: "Environment" },
+    { value: "Healthcare", label: "Healthcare" },
+    { value: "Cyber-security", label: "CyberSecurity" },
+    { value: "Finance", label: "Finance" },
+    { value: "Society", label: "Society" },
+    { value: "Sports", label: "Sports" },
+    { value: "Global-market", label: "GlobalMarket" },
+    { value: "International", label: "International" },
   ];
 
   return (

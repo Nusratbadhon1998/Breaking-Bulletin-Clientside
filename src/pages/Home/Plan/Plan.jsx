@@ -15,12 +15,12 @@ function Plan() {
         <p className="font-light text-sm">Select the perfect plan that suits your needs. Whether you're just starting out, seeking more features, or looking for the ultimate experience.</p>
       </div>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:items-stretch md:grid-cols-3 md:gap-8 ">
-        <div className="divide-y divide-gray-2=300 rounded-2xl border border-black shadow-sm">
+        <div className="divide-y divide-gray-2=300  border border-black shadow-sm">
           <PlanHeader type="Free" para="Get started with  Free Plan and explore the basics without  cost. " cost="Free" />
           <FreePlanList />
         </div>
 
-        <div className="divide-y relative top-12 divide-gray-300 rounded-2xl border bg-stone-800 text-stone-200  shadow-sm">
+        <div className="divide-y relative lg:top-12 divide-gray-300  border bg-stone-800 text-stone-200  shadow-sm">
           <PlanHeader
             type="Premium Alpha"
             para="Upgrade to the Alpha Plan and enhance your experience. "
@@ -29,7 +29,7 @@ function Plan() {
           <PremiumAlphaPlanList />
         </div>
 
-        <div className="divide-y divide-gray-300 rounded-2xl border border-black shadow-sm">
+        <div className="divide-y divide-gray-300  border border-black shadow-sm">
           <PlanHeader
             type="Premium Beta"
             para="For those who want it all, the Beta Plan offers complete access."

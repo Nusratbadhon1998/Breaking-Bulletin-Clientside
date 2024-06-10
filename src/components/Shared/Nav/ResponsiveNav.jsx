@@ -1,21 +1,21 @@
-import React from 'react'
+import { GiHamburgerMenu } from "react-icons/gi";
 
 function ResponsiveNav({navItem}) {
   return (
-    <div className="flex justify-between  items-center md:hidden lg:hidden ">
+    <div className="flex justify-between items-center md:hidden lg:hidden ">
     <div className="navbar-start flex-1">
       <h1>Breaking Bulletin</h1>
     </div>
-    <div className="navbar-end shrink">
+    <div className="navbar-end ">
       <div className="drawer drawer-end">
         <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content">
           {/* Page content here */}
           <label
             htmlFor="my-drawer-4"
-            className="drawer-button btn btn-primary"
+            className="drawer-button "
           >
-            Open drawer
+           <GiHamburgerMenu/>
           </label>
         </div>
         <div className="drawer-side z-50">

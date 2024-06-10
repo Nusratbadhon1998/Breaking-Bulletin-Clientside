@@ -13,6 +13,8 @@ import RecentNews from "./RecentNews/RecentNews";
 import LoadingSpinner from "../../components/Shared/LoadingSpinner";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import Category from "./Category/Category";
+import International from "./International/International";
+import Newsletter from "./Newsletter/Newsletter";
 
 function Home() {
   const axiosCommon = useAxiosCommon();
@@ -39,7 +41,6 @@ function Home() {
 
     return () => clearTimeout(timer);
   }, []);
-  console.log(trendingArticles);
   if (isLoading) return <LoadingSpinner />;
   return (
     <Container>
@@ -64,17 +65,20 @@ function Home() {
         <Category trendingArticles={trendingArticles} />
       </div>
 
-      <div className="divider divider-neutral text-3xl font-bold my-12">
+      <International/>
+
+      <div className="text-2xl font-bold my-12">
         Your Source for Reliable Insights
       </div>
 
       <Publisher />
 
-      <div className="divider divider-neutral text-3xl font-bold my-12">
+      <div className="text-2xl font-bold my-12">
         Our Community at a Glance
       </div>
       <UserStatistics />
       <Plan />
+      <Newsletter/>
 
       <HomePageModal isOpen={isOpen} setIsOpen={setIsOpen} />
       <ScrollToTopButton />

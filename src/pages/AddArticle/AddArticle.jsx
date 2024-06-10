@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 function AddArticle() {
   const { user } = useAuth();
   const queryClient = new QueryClient();
-  const navigate= useNavigate()
+  const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
   const [selectedTag, setSelectedTag] = useState(null);
   const [selectedPublisher, setSelectedPublisher] = useState(null);
@@ -32,16 +32,19 @@ function AddArticle() {
   const { mutateAsync } = useMutation({
     mutationFn: async (articleData) => {
       const { data } = await axiosSecure.post("/articles", articleData);
-      return data
+      if (data.message){
+        toast.warn(data.message)
+      }else{
+        toast.success("Successfully added data");
+
+      }
+      return data;
     },
     onSuccess: () => {
-      toast.success("Successfully added data");
       // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: ["articles"] });
     },
   });
-
- 
 
   const publisherOptions = publishers.map((publisher) => ({
     value: publisher.publisherName,
@@ -56,6 +59,7 @@ function AddArticle() {
     { value: "Society", label: "Society" },
     { value: "Sports", label: "Sports" },
     { value: "Global-market", label: "GlobalMarket" },
+    { value: "International", label: "International" },
   ];
 
   const handleSubmit = async (e) => {
@@ -79,22 +83,22 @@ function AddArticle() {
         authorEmail: user?.email,
         authorImage: user?.photoURL,
       };
-      
-     const{data}=await mutateAsync(articleData)
 
-navigate('/my-articles')
-     form.reset()
-     
-     console.log(data)
+      const { data } = await mutateAsync(articleData);
+      console.log(data)
+
+      navigate("/my-articles");
+      form.reset();
+
+      console.log(data);
     } catch (error) {
       console.log(error);
     }
   };
 
-
   return (
     <Container>
-      <Header title={"Add your DEsire article"}/>
+      <Header title={"Add your DEsire article"} />
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
           <Input label={"Article Title"} name="title" type="text" />
@@ -123,7 +127,7 @@ navigate('/my-articles')
         ></textarea>
         <Submit value="Add" />
       </form>
-      <ScrollToTopButton/>
+      <ScrollToTopButton />
     </Container>
   );
 }

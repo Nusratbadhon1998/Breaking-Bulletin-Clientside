@@ -13,18 +13,18 @@ function Subscription() {
               <tr>
                 <th></th>
                 <th scope="col">
-                  <h2 className="px-2 text-lg font-medium">Free</h2>
+                  <h2 className="px-2 text-xs lg:text-lg font-medium">Free</h2>
                   <p className="mb-3">
-                    <span className="text-2xl font-bold sm:text-4xl dark:text-gray-900">
+                    <span className=" sm:text-xs md:text-2xl font-bold  dark:text-gray-900">
                       0$
                     </span>
                     <span className="font-medium dark:text-gray-600">/mo</span>
                   </p>
                 </th>
                 <th scope="col">
-                  <h2 className="px-2 text-lg font-medium">Premium Alpha</h2>
+                  <h2 className="px-2 text-xs lg:text-lg font-medium">Premium Alpha</h2>
                   <p className="mb-3">
-                    <span className="text-2xl font-bold sm:text-4xl dark:text-gray-900">
+                    <span className="sm:text-xs md:text-2xl font-bold dark:text-gray-900">
                       15$
                     </span>
                     <span className="font-medium dark:text-gray-600">
@@ -33,9 +33,9 @@ function Subscription() {
                   </p>
                 </th>
                 <th scope="col">
-                  <h2 className="px-2 text-lg font-medium">Premium Beta</h2>
+                  <h2 className="px-2 text-xs lg:text-lg font-medium">Premium Beta</h2>
                   <p className="mb-3">
-                    <span className="text-2xl font-bold sm:text-4xl dark:text-gray-900">
+                    <span className="sm:text-xs md:text-2xl font-bold dark:text-gray-900">
                       25$
                     </span>
                     <span className="font-medium dark:text-gray-600">
@@ -75,7 +75,7 @@ function Subscription() {
         </div>
       </section>
       <div className="flex justify-center items-center">
-      <Link className="border border-black px-4 py-2 hover:bg-stone-800 hover:text-stone-200 transition-colors duration-150 " to="/payment"> Take Subscription</Link>
+      <Link className="border mt-6 border-black px-4 py-2 hover:bg-stone-800 hover:text-stone-200 transition-colors duration-150 " to="/payment"> Take Subscription</Link>
 
       </div>
     </section>
