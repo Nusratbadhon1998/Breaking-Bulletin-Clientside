@@ -11,6 +11,7 @@ import { GrPowerReset } from "react-icons/gr";
 import Header from "../../components/Shared/Header";
 import NoData from "../../components/Shared/NoData";
 import LoadingSpinner from "../../components/Shared/LoadingSpinner";
+import ScrollToTopButton from "../../components/Shared/ScrollToTopButton";
 
 function PublicArticles() {
   const { user: loggedUser = {}, loading } = useAuth();
@@ -79,10 +80,10 @@ function PublicArticles() {
   return (
     <Container>
       <div className="my-20">
-        <Header title="Explore Articles" />
-        <div className="flex min-h-screen gap-6">
+        <Header title="Unleash Your Inner Curiosity: Explore the Latest Trends and Insights!" />
+        <div className="flex flex-col lg:flex-row min-h-screen gap-6">
           {/* FIlter */}
-          <div className="w-2/6">
+          <div className="w-full lg:w-2/6">
             {/* Publisher */}
             <div>
               <h1 className="text-xl font-bold flex items-center gap-3">
@@ -160,7 +161,14 @@ function PublicArticles() {
                 <NoData title="Data is not available" />
               </div>
             ) : (
-              <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4'">
+              <div
+                data-aos="fade-up"
+                data-aos-delay="0"
+                data-aos-duration="1000"
+                data-aos-easing="ease-in-out"
+                data-aos-mirror="true"
+                className="grid  grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4'"
+              >
                 {articles.map((article) => (
                   <PublicArticleCard
                     user={user}
@@ -174,6 +182,7 @@ function PublicArticles() {
         </div>
 
         {/* Pagination */}
+        <ScrollToTopButton/>
       </div>
     </Container>
   );

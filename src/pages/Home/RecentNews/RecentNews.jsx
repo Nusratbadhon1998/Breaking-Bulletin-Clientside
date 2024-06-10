@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 function RecentNews({ article, tab }) {
   return (
     <div
+    
       className={` ${
         tab === "yes" ? "w-2/3" : "w-full"
       } border px-4 py-3 bg-white rounded-md shadow-md dark:bg-gray-800`}

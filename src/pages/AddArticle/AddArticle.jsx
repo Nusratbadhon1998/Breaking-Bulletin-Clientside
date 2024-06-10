@@ -98,7 +98,7 @@ function AddArticle() {
 
   return (
     <Container>
-      <Header title={"Add your DEsire article"} />
+      <Header title={"Unleash Your Inner Curiosity: Add the Latest Trends and Insights!"} />
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
           <Input label={"Article Title"} name="title" type="text" />

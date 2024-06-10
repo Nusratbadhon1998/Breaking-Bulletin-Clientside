@@ -8,14 +8,13 @@ function PublicArticleCard({ article, user }) {
   const { title, imageURL, publisher, tag, description, premium, _id } =
     article;
 
-  console.log(premium);
 
   return (
     <>
       <div className="border w-80 bg-base-100 shadow-xl ">
-        <figure>
+        <figure className="relative">
           <img
-            className="relative aspect-[3/2] grayscale transition-all delay-75 hover:cursor-auto duration-150 hover:grayscale-0"
+            className=" aspect-[3/2] grayscale transition-all delay-75 hover:cursor-auto duration-150 hover:grayscale-0"
             src={imageURL}
             alt={title}
           />

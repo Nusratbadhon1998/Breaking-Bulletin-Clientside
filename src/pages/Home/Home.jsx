@@ -4,14 +4,13 @@ import TrendingArticle from "./TrendingArticle/TrendingArticle";
 import Container from "../../components/Shared/Container";
 import HomePageModal from "../../components/Modal/HomePageModal";
 import { useQuery } from "@tanstack/react-query";
-import useAuth from "../../hooks/useAuth";
+
 import useAxiosCommon from "../../hooks/useAxiosCommon";
 import Publisher from "./Publisher/Publisher";
 import Plan from "./Plan/Plan";
 import ScrollToTopButton from "../../components/Shared/ScrollToTopButton";
 import RecentNews from "./RecentNews/RecentNews";
 import LoadingSpinner from "../../components/Shared/LoadingSpinner";
-import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import Category from "./Category/Category";
 import International from "./International/International";
 import Newsletter from "./Newsletter/Newsletter";
@@ -44,6 +43,7 @@ function Home() {
   if (isLoading) return <LoadingSpinner />;
   return (
     <Container>
+      
       <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
         <div className="grid grid-cols-1 space-y-5">
           <h1 className="font-bold text-xl">Recent News</h1>

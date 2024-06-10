@@ -12,15 +12,20 @@ function International() {
       return data;
     },
   });
-  const international = recentArticles.filter(
-    (article) => article.tag === "International"
-  );
+  const international =
+    recentArticles.filter((article) => article.tag === "International") || [];
   return (
     <div>
       <h1 className="text-2xl font-bold">International</h1>
       <section className="dark:bg-gray-100 dark:text-gray-800">
         <div className="container max-w-6xl p-6 mx-auto space-y-6 sm:space-y-12">
-          <Link
+         {international.length>0 &&  <Link
+            data-aos="fade-up"
+            data-aos-offset="200"
+            data-aos-delay="50"
+            data-aos-duration="1000"
+            data-aos-easing="ease-in-out"
+            data-aos-mirror="true"
             to={`/article/${international[0]._id}`}
             className="block max-w-sm gap-3 mx-auto sm:max-w-full group hover:no-underline focus:no-underline lg:grid lg:grid-cols-12 dark:bg-gray-50"
           >
@@ -38,10 +43,16 @@ function International() {
               </span>
               <p>{international[0].tag}</p>
             </div>
-          </Link>
+          </Link>}
           <div className="grid justify-center grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {international.slice(1,4).map((article) => (
+            {international.slice(1, 4).map((article) => (
               <Link
+                data-aos="fade-up"
+                data-aos-offset="200"
+                data-aos-delay="70"
+                data-aos-duration="1000"
+                data-aos-easing="ease-in-out"
+                data-aos-mirror="true"
                 to={`/article/${article._id}`}
                 key={article._id}
                 className="max-w-sm mx-auto group hover:no-underline focus:no-underline dark:bg-gray-50"
@@ -65,7 +76,7 @@ function International() {
           </div>
           <div className="flex justify-center">
             <Link
-            to="/all-articles"
+              to="/all-articles"
               type="button"
               className="px-6 py-3 border border-black text-sm  hover:bg-stone-800 hover:text-stone-200 transition-colors duration-200 "
             >

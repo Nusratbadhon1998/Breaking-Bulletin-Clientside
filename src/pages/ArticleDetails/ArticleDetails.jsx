@@ -9,7 +9,7 @@ function ArticleDetails() {
   const axiosSecure = useAxiosSecure();
 
   const handleViewCount = async (id) => {
-    const { data } = await axiosSecure.put(`/article/${id}`);
+    const { data } = await axiosSecure.patch(`/article/${id}`);
   };
   useEffect(() => {
     handleViewCount(id);
