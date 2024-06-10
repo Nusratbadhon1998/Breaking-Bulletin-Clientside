@@ -163,9 +163,7 @@ function PublicArticles() {
             ) : (
               <div
                 data-aos="fade-up"
-                data-aos-delay="0"
                 data-aos-duration="1000"
-                data-aos-easing="ease-in-out"
                 data-aos-mirror="true"
                 className="grid  grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4'"
               >

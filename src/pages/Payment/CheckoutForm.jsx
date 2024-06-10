@@ -1,10 +1,10 @@
-import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import React, { useEffect, useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
 import { toast } from "react-toastify";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Button from "../../components/Shared/Button/Button";
+import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 
 function CheckoutForm() {
   const queryClient = useQueryClient();
@@ -18,6 +18,7 @@ function CheckoutForm() {
   const elements = useElements();
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
+  const [isSubmitting, setIsSubmitting] = useState(false); // Add state for form submission
 
   useEffect(() => {
     if (price > 0) {
@@ -44,23 +45,29 @@ function CheckoutForm() {
     onSuccess: () => {
       toast.success("Payment Successful");
       queryClient.invalidateQueries({ queryKey: ["user"] });
+      setIsSubmitting(false); // Reset form submission state
     },
   });
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (isSubmitting) return; // Prevent multiple submissions
+    setIsSubmitting(true); // Set form submission state
+
     const form = event.target;
     const time = form.time.value;
     setDay(time);
     console.log(time)
 
     if (!stripe || !elements) {
+      setIsSubmitting(false); // Reset form submission state
       return;
     }
 
     const card = elements.getElement(CardElement);
 
     if (card === null) {
+      setIsSubmitting(false); // Reset form submission state
       return;
     }
 
@@ -72,42 +79,44 @@ function CheckoutForm() {
     if (error) {
       console.log("payment error", error);
       setError(error.message);
+      setIsSubmitting(false); // Reset form submission state
     } else {
       console.log("payment method", paymentMethod);
       setError("");
-    }
 
-    // confirm payment
-    const { paymentIntent, error: confirmError } =
-      await stripe.confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: card,
-          billing_details: {
-            email: user?.email || "anonymous",
-            name: user?.displayName || "anonymous",
+      // Confirm payment
+      const { paymentIntent, error: confirmError } =
+        await stripe.confirmCardPayment(clientSecret, {
+          payment_method: {
+            card: card,
+            billing_details: {
+              email: user?.email || "anonymous",
+              name: user?.displayName || "anonymous",
+            },
           },
-        },
-      });
+        });
 
-    if (confirmError) {
-      console.log("confirm error");
-    } else {
-      console.log("payment intent", paymentIntent);
-      if (paymentIntent.status === "succeeded") {
-        console.log("transaction id", paymentIntent.id);
-        setTransactionId(paymentIntent.id);
+      if (confirmError) {
+        console.log("confirm error", confirmError);
+        setError(confirmError.message);
+        setIsSubmitting(false); // Reset form submission state
+      } else {
+        console.log("payment intent", paymentIntent);
+        if (paymentIntent.status === "succeeded") {
+          console.log("transaction id", paymentIntent.id);
+          setTransactionId(paymentIntent.id);
 
-        let premiumTakenDate = new Date();
-        if (time === "1 min") {
-          premiumTakenDate.setMinutes(premiumTakenDate.getMinutes() + 1);
-        } else if (time === "5 day") {
-          premiumTakenDate.setDate(premiumTakenDate.getDate() + 5);
-        } else if (time === "10 day") {
-          premiumTakenDate.setDate(premiumTakenDate.getDate() + 10);
+          let premiumTakenDate = new Date();
+          if (time === "1 min") {
+            premiumTakenDate.setMinutes(premiumTakenDate.getMinutes() + 1);
+          } else if (time === "5 day") {
+            premiumTakenDate.setDate(premiumTakenDate.getDate() + 5);
+          } else if (time === "10 day") {
+            premiumTakenDate.setDate(premiumTakenDate.getDate() + 10);
+          }
+
+          mutateAsync(premiumTakenDate);
         }
-
-
-        mutateAsync(premiumTakenDate);
       }
     }
   };
@@ -179,14 +188,12 @@ function CheckoutForm() {
           </select>
         </div>
         <div className="flex justify-center items-center">
-          {/* <button
-            className="mx-auto mt-3 bg-stone-800 text-stone-200 w-24 px-4 py-2"
+          <Button
+            label="Pay"
             type="submit"
-            disabled={!stripe}
-          >
-            Pay
-          </button> */}
-          <Button label="Pay" type="submit" stripe={stripe} />
+            stripe={stripe}
+            disabled={!stripe || isSubmitting}
+          />
         </div>
         <p className="text-red-600">{error}</p>
       </form>
